@@ -8,19 +8,19 @@ public class FoodItem {
     private int timeUntilExpire;
 
 
-    public FoodItem(String ForegroundC, String BackGroundC, List<String> itemsInPicture, Set<String> validItems) throws InstantiationException {
+    public FoodItem(String ForegroundC, String BackGroundC, List<String> itemsInPicture, Set<String> validItems) {
         this.itemType = assignItem(itemsInPicture, validItems);
         this.timeUntilExpire = expiryDate(ForegroundC, BackGroundC, itemType);
 
     }
 
-    private String assignItem(List<String> itemsInPicture, Set<String> validItems) throws InstantiationException {
+    private String assignItem(List<String> itemsInPicture, Set<String> validItems) {
         for (String s : itemsInPicture) {
             if (validItems.contains(s)) {
                 return s;
             }
         }
-        throw new InstantiationException();
+        return "notValid";
     }
 
     private int expiryDate (String ForegroundC, String BackGroundC, String itemType) {
