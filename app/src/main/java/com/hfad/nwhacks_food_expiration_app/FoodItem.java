@@ -3,25 +3,25 @@ package com.hfad.nwhacks_food_expiration_app;
 import java.io.Serializable;
 import java.util.*;
 
-public class FoodItem implements Serializable {
+public class FoodItem {
 
     private String itemType;
     private int timeUntilExpire;
 
 
-    public FoodItem(String ForegroundC, String BackGroundC, List<String> dominantC, List<String> itemsInPicture, Set<String> validItems) throws InstantiationException {
+    public FoodItem(String ForegroundC, String BackGroundC, List<String> dominantC, List<String> itemsInPicture, Set<String> validItems) {
         this.itemType = assignItem(itemsInPicture, validItems);
         this.timeUntilExpire = expiryDate(ForegroundC, BackGroundC, dominantC, itemType);
 
     }
 
-    private String assignItem(List<String> itemsInPicture, Set<String> validItems) throws InstantiationException {
+    private String assignItem(List<String> itemsInPicture, Set<String> validItems) {
         for (String s : itemsInPicture) {
             if (validItems.contains(s)) {
                 return s;
             }
         }
-        throw new InstantiationException();
+        return "notValid";
     }
 
     private int expiryDate (String ForegroundC, String BackGroundC, List<String> dominantC, String itemType) {
@@ -38,9 +38,16 @@ public class FoodItem implements Serializable {
             // check if banana is all yellow
             else if (ForegroundC.equals("Yellow") || (dominantC.contains("Yellow") && !dominantC.contains("Green"))) {
                 if (!BackGroundC.equals("Brown") && !dominantC.contains("Brown")) {
-                    expiryTime = 3;
+                    expiryTime = 4;
                 }
             }
+            // check if contains brown
+            else if (ForegroundC.equals("Yellow") && !BackGroundC.equals("Brown") && (dominantC.contains("Brown") || dominantC.contains("Grey"))) {
+                expiryTime = 2;
+            }
+        }
+        else if (itemType.equals("apple")) {
+            expiryTime = 14;
         }
 
         return expiryTime;
