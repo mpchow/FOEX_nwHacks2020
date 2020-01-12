@@ -11,8 +11,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class Recently_Added_Screen extends AppCompatActivity {
+
+    ImageView imgview_item_photo;
+    EditText et_item_name;
+    EditText et_expiration_date;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +28,27 @@ public class Recently_Added_Screen extends AppCompatActivity {
         setContentView(R.layout.activity_recently__added__screen);
 
         Intent intent = getIntent();
+        Bitmap photo = (Bitmap) intent.getParcelableExtra("photo");
+        int expiryTime = intent.getIntExtra("expiryTime", 0);
+        String itemName = intent.getStringExtra("itemName");
 
+        imgview_item_photo = (ImageView) findViewById(R.id.imgview_photo);
+        et_item_name = (EditText) findViewById(R.id.et_item_name);
+        et_expiration_date = (EditText) findViewById(R.id.et_expiration_date);
+
+        imgview_item_photo.setImageBitmap(photo);
+        et_item_name.setText(itemName);
+        et_expiration_date.setText(expiryTime);
+    }
+
+    public void activityInventoryScreen(View view) {
+        Intent intent = new Intent(this, Inventory_Screen.class);
+        startActivity(intent);
+    }
+
+    public void activityCameraCapture(View view) {
+        Intent intent = new Intent(this, Camera_Capture.class);
+        startActivity(intent);
     }
 
 }
