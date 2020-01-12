@@ -76,7 +76,7 @@ public class Camera_Capture extends AppCompatActivity {
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-           startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
 //             File photoFile = null;
 //             try {
 //                 photoFile = createImageFile();
@@ -102,12 +102,14 @@ public class Camera_Capture extends AppCompatActivity {
 
     // Get Image Thumbnail
     @Override
-    protected void onActivityResult(int requestCode, final int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        FoodList history = null;
+        loadFromDisk(history);
         final Intent intent = new Intent(this, Recently_Added_Screen.class);
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
-            final Bitmap imageBitmap = (Bitmap) extras.get("data");
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
             view_photo.setImageBitmap(imageBitmap);
 
             // Convert bitmap to ByteArray
@@ -149,22 +151,9 @@ public class Camera_Capture extends AppCompatActivity {
                             JsonObject jsonObjResult = new JsonParser().parse(body).getAsJsonObject();
 
                             FoodItem resultFood = Azure_Scanner.jsonToFood(jsonObjResult);
-                            if (resultFood.getItemType() == "notValid") {
-                                //MAKE SOMETHING HAPPEN HERE
-                            } else {
-                                FoodList history = null;
-                                loadFromDisk(history);
-                                history.addFoodItem(resultFood);
-                                saveToDisk(history);
-                            }
-                            intent.putExtra("expiryTime", resultFood.getExpiryTime());
-                            intent.putExtra("itemName", resultFood.getItemType());
-                            intent.putExtra("photo", imageBitmap);
-                            startActivity(intent);
-
-
 
                             System.out.println(resultFood.toString());
+                            return body;
                         }
                         catch(IOException ex) {
                             ex.printStackTrace();
@@ -175,8 +164,14 @@ public class Camera_Capture extends AppCompatActivity {
 
 
 
-
-
+//                        history.addFoodItem(resultFood);
+//                        saveToDisk(history);
+//
+//
+//                        intent.putExtra("expiryTime", resultFood.getExpiryTime());
+//                        intent.putExtra("itemName", resultFood.getItemType());
+//                        intent.putExtra("photo", imageBitmap);
+//                        startActivity(intent);
 
 
                         return ""; //jsonResultstr;
@@ -206,6 +201,7 @@ public class Camera_Capture extends AppCompatActivity {
                         StringBuilder resultText = new StringBuilder();
 //                        for (Caption caption : result.description.captions)
 //                            resultText.append(caption.text);
+                        startActivity(intent);
                     }
                 }
 
@@ -213,7 +209,7 @@ public class Camera_Capture extends AppCompatActivity {
                 protected void onProgressUpdate(String... values) {
                     progressDialog.setMessage(values[0]);
                 }
-             };
+            };
 
             // Run the task
             visionTask.execute(inputStream);
@@ -270,5 +266,5 @@ public class Camera_Capture extends AppCompatActivity {
 //         currentPhotoPath = image.getAbsolutePath();
 //         return image;
 //     }
-    
+
 }
