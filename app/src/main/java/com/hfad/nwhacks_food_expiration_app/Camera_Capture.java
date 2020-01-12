@@ -102,14 +102,12 @@ public class Camera_Capture extends AppCompatActivity {
 
     // Get Image Thumbnail
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        FoodList history = null;
-        loadFromDisk(history);
-        Intent intent = new Intent(this, Recently_Added_Screen.class);
+    protected void onActivityResult(int requestCode, final int resultCode, @Nullable Intent data) {
+        final Intent intent = new Intent(this, Recently_Added_Screen.class);
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            final Bitmap imageBitmap = (Bitmap) extras.get("data");
             view_photo.setImageBitmap(imageBitmap);
 
             // Convert bitmap to ByteArray
@@ -151,6 +149,20 @@ public class Camera_Capture extends AppCompatActivity {
                             JsonObject jsonObjResult = new JsonParser().parse(body).getAsJsonObject();
 
                             FoodItem resultFood = Azure_Scanner.jsonToFood(jsonObjResult);
+                            if (resultFood.getItemType() == "notValid") {
+                                //MAKE SOMETHING HAPPEN HERE
+                            } else {
+                                FoodList history = null;
+                                loadFromDisk(history);
+                                history.addFoodItem(resultFood);
+                                saveToDisk(history);
+                            }
+                            intent.putExtra("expiryTime", resultFood.getExpiryTime());
+                            intent.putExtra("itemName", resultFood.getItemType());
+                            intent.putExtra("photo", imageBitmap);
+                            startActivity(intent);
+
+
 
                             System.out.println(resultFood.toString());
                         }
@@ -163,14 +175,8 @@ public class Camera_Capture extends AppCompatActivity {
 
 
 
-//                        history.addFoodItem(resultFood);
-//                        saveToDisk(history);
-//
-//
-//                        intent.putExtra("expiryTime", resultFood.getExpiryTime());
-//                        intent.putExtra("itemName", resultFood.getItemType());
-//                        intent.putExtra("photo", imageBitmap);
-//                        startActivity(intent);
+
+
 
 
                         return ""; //jsonResultstr;
