@@ -7,21 +7,25 @@
     android:paddingTop="20dp"
     android:paddingRight="20dp"
     android:paddingBottom="20dp">
+
     <ImageView
-        android:id="@+id/imgview_logo"
+        android:id="@+id/imgview_newlogo"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/logo"
-        android:layout_gravity="right"/>
+        android:layout_height="64dp"
+        android:layout_gravity="left"
+        app:srcCompat="@drawable/newlogo" />
 
     <TextView
         android:id="@+id/tv_recently_added_item"
-        android:paddingTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity=""
+        android:paddingTop="10dp"
         android:text="Recently Added Item"
-        android:layout_gravity="center"
-        android:textSize="30dp"/>
+        android:textAllCaps="false"
+        android:textColor="@color/cardview_dark_background"
+        android:textSize="30dp" />
+
 
     <ImageView
         android:id="@+id/imgview_item_photo"
