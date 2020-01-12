@@ -8,27 +8,39 @@ public class FoodItem {
     private int timeUntilExpire;
 
 
-    public FoodItem(String ForegroundC, String BackGroundC, List<String> itemsInPicture, Set<String> validItems) {
+    public FoodItem(String ForegroundC, String BackGroundC, List<String> dominantC, List<String> itemsInPicture, Set<String> validItems) throws InstantiationException {
         this.itemType = assignItem(itemsInPicture, validItems);
-        this.timeUntilExpire = expiryDate(ForegroundC, BackGroundC, itemType);
+        this.timeUntilExpire = expiryDate(ForegroundC, BackGroundC, dominantC, itemType);
 
     }
 
-    private String assignItem(List<String> itemsInPicture, Set<String> validItems) {
+    private String assignItem(List<String> itemsInPicture, Set<String> validItems) throws InstantiationException {
         for (String s : itemsInPicture) {
             if (validItems.contains(s)) {
                 return s;
             }
         }
-        return "notValid";
+        throw new InstantiationException();
     }
 
-    private int expiryDate (String ForegroundC, String BackGroundC, String itemType) {
+    private int expiryDate (String ForegroundC, String BackGroundC, List<String> dominantC, String itemType) {
         int expiryTime = 0;
         if(itemType.equals("banana")) {
-            if (ForegroundC.equals("green")) {
+            // Check if banana is green
+            if (ForegroundC.equals("Green") || (dominantC.contains("Green") && !dominantC.contains("Yellow")) ) {
+                expiryTime = 7;
+            }
+            // check if banana is yellow and green
+            else if (dominantC.contains("Yellow") && dominantC.contains("Green")) {
                 expiryTime = 5;
             }
+            // check if banana is all yellow
+            else if (ForegroundC.equals("Yellow") || (dominantC.contains("Yellow") && !dominantC.contains("Green"))) {
+                if (!BackGroundC.equals("Brown") && !dominantC.contains("Brown")) {
+                    expiryTime = 3;
+                }
+            }
+
         }
 
         return expiryTime;

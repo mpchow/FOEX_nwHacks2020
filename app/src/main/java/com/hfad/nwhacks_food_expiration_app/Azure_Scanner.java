@@ -48,6 +48,7 @@ public class Azure_Scanner extends AppCompatActivity {
     public static FoodItem jsonToFood(JsonObject jsonObject) throws InstantiationException {
         String foregroundC = "";
         String backgroundC = "";
+        List<String> dominantC = new ArrayList<>();
         List<String> tags = new ArrayList<>();
         try {
             JsonObject JsonDesc = jsonObject.getAsJsonObject("description");
@@ -56,13 +57,17 @@ public class Azure_Scanner extends AppCompatActivity {
                 tags.add(JsonTags.get(i).getAsString());
             }
             JsonObject JsonColor = jsonObject.getAsJsonObject("color");
+            JsonArray JsonDomColours = JsonColor.getAsJsonArray("dominantColors");
+            for (int i = 0; i < JsonDomColours.size(); i++) {
+                dominantC.add(JsonDomColours.get(i).getAsString());
+            }
             foregroundC = JsonColor.get("dominantColorForeground").getAsString();
             backgroundC = JsonColor.get("dominantColorBackground").getAsString();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return new FoodItem(foregroundC, backgroundC, tags, validItems);
+        return new FoodItem(foregroundC, backgroundC, dominantC, tags, validItems);
     }
 
 }
