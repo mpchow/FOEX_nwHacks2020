@@ -37,10 +37,17 @@ public class FoodItem {
             // check if banana is all yellow
             else if (ForegroundC.equals("Yellow") || (dominantC.contains("Yellow") && !dominantC.contains("Green"))) {
                 if (!BackGroundC.equals("Brown") && !dominantC.contains("Brown")) {
-                    expiryTime = 3;
+                    expiryTime = 4;
                 }
             }
+            // check if contains brown
+            else if (ForegroundC.equals("Yellow") && !BackGroundC.equals("Brown") && (dominantC.contains("Brown") || dominantC.contains("Grey"))) {
+                expiryTime = 2;
+            }
 
+        }
+        else if (itemType.equals("apple")) {
+            expiryTime = 14;
         }
 
         return expiryTime;
