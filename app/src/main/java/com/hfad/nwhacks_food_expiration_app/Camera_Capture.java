@@ -103,13 +103,11 @@ public class Camera_Capture extends AppCompatActivity {
     // Get Image Thumbnail
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        FoodList history = null;
-        loadFromDisk(history);
         final Intent intent = new Intent(this, Recently_Added_Screen.class);
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            final Bitmap imageBitmap = (Bitmap) extras.get("data");
             view_photo.setImageBitmap(imageBitmap);
 
             // Convert bitmap to ByteArray
@@ -152,8 +150,17 @@ public class Camera_Capture extends AppCompatActivity {
 
                             FoodItem resultFood = Azure_Scanner.jsonToFood(jsonObjResult);
 
+                            FoodList history = loadFromDisk();
+
+                            history.addFoodItem(resultFood);
+                            saveToDisk(history);
+
                             System.out.println(resultFood.toString());
                             return body;
+
+//                        intent.putExtra("expiryTime", resultFood.getExpiryTime());
+//                        intent.putExtra("itemName", resultFood.getItemType());
+//                        intent.putExtra("photo", imageBitmap);
                         }
                         catch(IOException ex) {
                             ex.printStackTrace();
@@ -164,14 +171,6 @@ public class Camera_Capture extends AppCompatActivity {
 
 
 
-//                        history.addFoodItem(resultFood);
-//                        saveToDisk(history);
-//
-//
-//                        intent.putExtra("expiryTime", resultFood.getExpiryTime());
-//                        intent.putExtra("itemName", resultFood.getItemType());
-//                        intent.putExtra("photo", imageBitmap);
-//                        startActivity(intent);
 
 
                         return ""; //jsonResultstr;
@@ -230,8 +229,9 @@ public class Camera_Capture extends AppCompatActivity {
         }
     }
 
-    public void loadFromDisk(FoodList history) {
+    public FoodList loadFromDisk() {
         Gson gson = new Gson();
+        FoodList history;
 
         try {
             Type listType = new TypeToken<FoodList>() { }.getType();
@@ -240,9 +240,7 @@ public class Camera_Capture extends AppCompatActivity {
         catch (Exception e) {
             history = new FoodList();
         }
-
-
-
+        return history;
     }
 
 
