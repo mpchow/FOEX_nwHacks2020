@@ -4,16 +4,21 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Set;
 import java.util.TreeSet;
 
 public class FoodList {
-    private final Set<FoodItem> foods;
+    private final Queue<FoodItem> foods;
 
     public FoodList() {
-//        Comparator<FoodItem> comparator = (f1, f2) -> f1.getExpiryTime() == f2.getExpiryTime() ? 0 :
-//                f1.getExpiryTime() < f2.getExpiryTime() ? -f1.getExpiryTime() : f2.getExpiryTime();
-        this.foods = new HashSet<>();
+        this.foods = new PriorityQueue<>(new Comparator<FoodItem>() {
+            @Override
+            public int compare(FoodItem f1, FoodItem f2) {
+                return Integer.compare(f1.getExpiryTime(), f2.getExpiryTime());
+            }
+        });
     }
 
     public void decAllFood() {

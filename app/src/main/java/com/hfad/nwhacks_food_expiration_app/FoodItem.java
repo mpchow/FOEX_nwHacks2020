@@ -1,8 +1,9 @@
 package com.hfad.nwhacks_food_expiration_app;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class FoodItem {
+public class FoodItem implements Serializable {
 
     private String itemType;
     private int timeUntilExpire;
@@ -40,7 +41,6 @@ public class FoodItem {
                     expiryTime = 3;
                 }
             }
-
         }
 
         return expiryTime;
