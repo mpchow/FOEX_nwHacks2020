@@ -1,5 +1,6 @@
 package com.hfad.nwhacks_food_expiration_app;
 
+import java.io.Serializable;
 import java.util.*;
 
 public class FoodItem {
@@ -44,7 +45,6 @@ public class FoodItem {
             else if (ForegroundC.equals("Yellow") && !BackGroundC.equals("Brown") && (dominantC.contains("Brown") || dominantC.contains("Grey"))) {
                 expiryTime = 2;
             }
-
         }
         else if (itemType.equals("apple")) {
             expiryTime = 14;
