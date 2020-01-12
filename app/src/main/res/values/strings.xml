@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">NWHacks_Food_Expiration_App</string>
+    <string name="title_activity_camera__capture">Camera_Capture</string>
+    <string name="title_activity_home__page">Home_Page</string>
+    <string name="title_activity_loading__screen">Loading_Screen</string>
+    <string name="title_activity_recently__added__screen">Recently_Added_Screen</string>
+    <string name="title_activity_inventory__screen">Inventory_Screen</string>
+    <!--    <string name="title_activity_azure__scanner">Azure_Scanner</string>-->
+</resources>

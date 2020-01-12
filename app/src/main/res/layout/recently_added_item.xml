@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="20dp"
+    android:paddingTop="20dp"
+    android:paddingRight="20dp"
+    android:paddingBottom="20dp">
+    <ImageView
+        android:id="@+id/imgview_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/logo"
+        android:layout_gravity="right"/>
+
+    <TextView
+        android:id="@+id/tv_recently_added_item"
+        android:paddingTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recently Added Item"
+        android:layout_gravity="center"
+        android:textSize="30dp"/>
+
+    <ImageView
+        android:id="@+id/imgview_item_photo"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:srcCompat="@android:drawable/alert_light_frame" />
+
+    <TextView
+        android:id="@+id/tv_item_name"
+        android:paddingTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Object Name"
+        android:textSize="25dp"/>
+
+    <EditText
+        android:id="@+id/et_item_name"
+        android:paddingTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="(ex: Banana)" />
+
+    <TextView
+        android:id="@+id/tv_expiration_date"
+        android:paddingTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Expiration Day"
+        android:textSize="25dp"/>
+
+    <EditText
+        android:id="@+id/et_expiration_date"
+        android:paddingTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="(ex: 5 Days)" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="20dp">
+
+        <ImageButton
+            android:id="@+id/imgbtn_arrow_left"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:srcCompat="@drawable/left_arrow"
+            android:layout_gravity="left"
+            />
+
+        <ImageButton
+            android:id="@+id/imgbtn_arrow_right"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="190dp"
+            android:layout_gravity="left"
+            app:srcCompat="@drawable/right_arrow" />
+
+    </LinearLayout>
+
+
+
+
+
+
+</LinearLayout>
