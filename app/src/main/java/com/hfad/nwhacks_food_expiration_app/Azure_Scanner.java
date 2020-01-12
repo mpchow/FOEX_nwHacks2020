@@ -26,7 +26,7 @@ import java.util.Set;
 
 public class Azure_Scanner extends AppCompatActivity {
 
-    private static Set<String> validItems = new HashSet<>(Arrays.asList("banana"));
+    private static Set<String> validItems = new HashSet<>(Arrays.asList("banana", "apple"));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -51,6 +51,7 @@ import okhttp3.Response;
 //import edmt.dev.edmtdevcognitivevision.VisionServiceRestClient;
 
 public class Camera_Capture extends AppCompatActivity {
+    FoodItem resultFood;
     private final String API_KEY = "23dc58af58194da9a7dc03a196537d22";
     private final String API_LINK = "https://nwhacksfoodscanner.cognitiveservices.azure.com/vision/v2.0/analyze?visualFeatures=ImageType,Color,Description";
 
@@ -148,7 +149,7 @@ public class Camera_Capture extends AppCompatActivity {
 
                             JsonObject jsonObjResult = new JsonParser().parse(body).getAsJsonObject();
 
-                            FoodItem resultFood = Azure_Scanner.jsonToFood(jsonObjResult);
+                            resultFood = Azure_Scanner.jsonToFood(jsonObjResult);
 
                             FoodList history = loadFromDisk();
 
@@ -200,6 +201,9 @@ public class Camera_Capture extends AppCompatActivity {
                         StringBuilder resultText = new StringBuilder();
 //                        for (Caption caption : result.description.captions)
 //                            resultText.append(caption.text);
+                        intent.putExtra("expiryTime", resultFood.getExpiryTime());
+                        intent.putExtra("itemName", resultFood.getItemType());
+                        intent.putExtra("photo", imageBitmap);
                         startActivity(intent);
                     }
                 }
