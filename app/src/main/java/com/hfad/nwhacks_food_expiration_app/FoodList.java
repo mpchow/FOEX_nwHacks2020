@@ -1,8 +1,10 @@
 package com.hfad.nwhacks_food_expiration_app;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -10,15 +12,10 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class FoodList {
-    private final Queue<FoodItem> foods;
+    private final List<FoodItem> foods;
 
     public FoodList() {
-        this.foods = new PriorityQueue<>(new Comparator<FoodItem>() {
-            @Override
-            public int compare(FoodItem f1, FoodItem f2) {
-                return Integer.compare(f1.getExpiryTime(), f2.getExpiryTime());
-            }
-        });
+        this.foods = new ArrayList<FoodItem>();
     }
 
     public void decAllFood() {
